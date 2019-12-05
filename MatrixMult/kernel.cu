@@ -92,8 +92,8 @@ int main()
 			threadSize = 32;
 			blockSize = (unsigned int)ceil((float)Size / 32);
 		}
-		dim3 threadsPerBlock{ threadSize, threadSize };
-		dim3 blocksPerGrid{ blockSize, blockSize };
+		dim3 threadsPerBlock( threadSize, threadSize );
+		dim3 blocksPerGrid( blockSize, blockSize );
 		MatrixMulKernel << <blocksPerGrid, threadsPerBlock >> > (A, B, C, Size);
 
 		cudaDeviceSynchronize();
@@ -146,8 +146,8 @@ int main()
 
 		std::cout << threadSize << "   " << blockSize << std::endl;
 
-		dim3 threadsPerBlock{ threadSize, threadSize };
-		dim3 blocksPerGrid{ blockSize,blockSize,blockSize };
+		dim3 threadsPerBlock( threadSize, threadSize );
+		dim3 blocksPerGrid( blockSize,blockSize,blockSize );
 
 		//std::cout << cudaGetErrorString(cudaGetLastError());
 		MatrixMulKernelShared << < blocksPerGrid, threadsPerBlock, sizeof(int) * threadSize * threadSize * 3 >> > (A, B, C, threadSize, Size);
@@ -165,8 +165,8 @@ int main()
 				//std::cout << C[iteration(Size)] << "  ";
 				if (C[iteration(Size)] != Size)
 				{
-					//Passed = false;
-					//break;
+					Passed = false;
+					break;
 				}
 			}
 			//std::cout << std::endl;
